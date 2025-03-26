@@ -13,7 +13,7 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['title', 'author', 'publication_year', 'genre']
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "username", "email", "password", "confirm_password", "date_joined")
 
-    def validate_username(self, value) -> str:
+    def validate_username(self, value: str) -> str:
         """
         Validate username
         :param value:

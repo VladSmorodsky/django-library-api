@@ -29,6 +29,14 @@ class BookViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
 
+    def perform_create(self, serializer: BookSerializer) -> None:
+        """
+        Create a new book
+        :param serializer:
+        :return:
+        """
+        serializer.save(user=self.request.user)
+
 
 class RegisterUserViewSet(viewsets.ModelViewSet):
     """
