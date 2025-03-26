@@ -2,6 +2,7 @@ from typing import List
 
 from rest_framework import viewsets, permissions
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
 
 from main.filters import BookFilter
 from main.models import Book
@@ -15,8 +16,10 @@ class BookViewSet(viewsets.ModelViewSet):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_class = BookFilter
+    ordering_fields = ['publication_year', 'title']
+    ordering = ['title']
 
     def get_permissions(self) -> List[permissions.BasePermission]:
         """
