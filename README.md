@@ -34,3 +34,10 @@ python manage.python creaetesuperuser
 ```shell
 python manage.py runserver
 ```
+
+## Documentation
+
+Swagger documentation can be found on url: `http://[host]:[port]/api/v1/docs/`
+ 
+- `host` - your host
+- `port` - your port
