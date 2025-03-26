@@ -14,6 +14,8 @@ cd library_api_project
 3. Copy `library_api_project/.env.example` file and enter values into `library_api_project/.env` file:
 
 - **PROJECT_SECRET_KEY** - project secret key
+- **ACCESS_TOKEN_LIFETIME** - access token ttl in minutes.
+- **REFRESH_TOKEN_LIFETIME** - refresh token ttl in minutes.
 
 4. Run migrations
 
@@ -32,3 +34,10 @@ python manage.python creaetesuperuser
 ```shell
 python manage.py runserver
 ```
+
+## Documentation
+
+Swagger documentation can be found on url: `http://[host]:[port]/api/v1/docs/`
+ 
+- `host` - your host
+- `port` - your port

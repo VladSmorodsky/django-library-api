@@ -1,3 +1,49 @@
-from django.shortcuts import render
+from typing import List
+
+from rest_framework import viewsets, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
+
+from main.filters import BookFilter
+from main.models import Book
+from main.serializers import BookSerializer, RegisterUserSerializer
+
 
 # Create your views here.
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    Endpoint for viewing and editing books
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_class = BookFilter
+    ordering_fields = ['publication_year', 'title']
+    ordering = ['title']
+
+    def get_permissions(self) -> List[permissions.BasePermission]:
+        """
+        Get permissions for destroying books only for admins
+        :return:
+        """
+        if self.action == 'destroy':
+            permission_classes = [permissions.IsAdminUser]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer: BookSerializer) -> None:
+        """
+        Create a new book
+        :param serializer:
+        :return:
+        """
+        serializer.save(user=self.request.user)
+
+
+class RegisterUserViewSet(viewsets.ModelViewSet):
+    """
+    Register new users
+    """
+    serializer_class = RegisterUserSerializer
+    permission_classes = [permissions.AllowAny]
