@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from main.views import BookViewSet
+from main.views import BookViewSet, RegisterUserViewSet
 
 router = DefaultRouter()
 router.register(r'books', BookViewSet)
@@ -25,5 +25,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('register/', RegisterUserViewSet.as_view({'post': 'create'}), name='register'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
